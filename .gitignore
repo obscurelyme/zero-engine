@@ -33,6 +33,7 @@
 
 # vcpkg
 vcpkg_installed
+.cache
 
 # cmake
 build
