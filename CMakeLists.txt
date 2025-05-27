@@ -20,7 +20,14 @@ set(SOURCES
 )
 
 # Add sources to executable
-add_executable(ZeroEngine ${SOURCES})
+if(WIN32_APP)
+  # WIN32 GUI Application
+  add_executable(ZeroEngine WIN32 ${SOURCES})
+else()
+  # Console Application
+  add_executable(ZeroEngine ${SOURCES})
+endif()
+
 
 # Include directories
 target_include_directories(ZeroEngine PRIVATE include)

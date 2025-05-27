@@ -9,7 +9,8 @@
         "value": "x64"
       },
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug"
+        "CMAKE_BUILD_TYPE": "Debug",
+        "WIN32_APP": false
       }
     },
     {
@@ -20,7 +21,8 @@
         "value": "x64"
       },
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release"
+        "CMAKE_BUILD_TYPE": "Release",
+        "WIN32_APP": true
       }
     }
   ]
