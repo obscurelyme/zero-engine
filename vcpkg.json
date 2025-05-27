@@ -4,5 +4,5 @@
   "version": "0.0.1",
   "description": "A toy game engine, let's see what I can do with this.",
   "maintainers": ["Nicola (Mackenzie) Greco <obscurelymeclub@gmail.com>"],
-  "dependencies": ["cli11", "spdlog", "sdl3"]
+  "dependencies": ["cli11", "glew", "spdlog", "sdl3"]
 }

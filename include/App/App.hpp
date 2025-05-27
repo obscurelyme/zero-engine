@@ -3,10 +3,10 @@
 
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_log.h>
+#include <SDL3/SDL_video.h>
 #include <spdlog/logger.h>
 #include <spdlog/spdlog.h>
 
-#include <memory>
 #include <string>
 
 struct AppParams {
@@ -26,6 +26,8 @@ class App {
   private:
     SDL_Window* window = nullptr;
     SDL_Renderer* renderer = nullptr;
+    SDL_GLContext glContext = nullptr;
+
     static std::shared_ptr<spdlog::logger> logger;
 };
 

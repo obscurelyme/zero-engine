@@ -1,4 +1,11 @@
+// clang-format off
+// NOTE: The order matters here. Need clang format to not mess with this.
+#include <GL/glew.h>
+// #include <GL/gl.h>
+// clang-format on
+
 #include <CLI/CLI.hpp>
+#include <string>
 
 #include "App/App.hpp"
 
