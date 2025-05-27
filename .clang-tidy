@@ -44,7 +44,6 @@ WarningsAsErrors: "*,
   -cppcoreguidelines-avoid-c-arrays,
   -misc-non-private-member-variables-in-classes"
 HeaderFileExtensions:
-  - ""
   - h
   - hh
   - hpp
