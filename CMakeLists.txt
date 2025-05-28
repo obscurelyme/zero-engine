@@ -10,6 +10,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(C_STANDARD 20)
 set(CMAKE_CXX_STANDARD 20)
 
+find_package(GLEW REQUIRED)
 find_package(fmt CONFIG REQUIRED)
 find_package(CLI11 CONFIG REQUIRED)
 find_package(SDL3 CONFIG REQUIRED)
@@ -20,6 +21,7 @@ set(SOURCES
   src/engine/app.cpp
   src/engine/window.cpp
   src/engine/renderer.cpp
+  src/engine/fs.cpp
 )
 
 # Add sources to executable
@@ -42,6 +44,7 @@ target_link_libraries(ZeroEngine PRIVATE
   CLI11::CLI11 
   SDL3::SDL3 
   OpenGL32
+  GLEW::GLEW
 )
 
 # Enable ALL compiler warnings

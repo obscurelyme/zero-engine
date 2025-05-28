@@ -1,9 +1,3 @@
-// clang-format off
-// NOTE: The order matters here. Need clang format to not mess with this.
-// #include <GL/glew.h>
-// #include <GL/gl.h>
-// clang-format on
-
 #include <SDL3/SDL_error.h>
 #include <SDL3/SDL_log.h>
 
@@ -11,7 +5,8 @@
 #include <exception>
 #include <string>
 
-#include "Zero/App.hpp"
+#include "zero/app.hpp"
+#include "zero/fs.hpp"
 
 int main(int argc, char** argv) {
   CLI::App app{"Zero Engine"};

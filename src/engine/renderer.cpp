@@ -50,4 +50,4 @@ void Renderer::ClearScreen() const {
   glClear(GL_COLOR_BUFFER_BIT);
 }
 
-void Renderer ::SwapBuffers() const { SDL_GL_SwapWindow(window); }
+void Renderer::SwapBuffers() const { SDL_GL_SwapWindow(window); }
