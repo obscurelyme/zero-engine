@@ -4,19 +4,22 @@
 // #include <GL/gl.h>
 // clang-format on
 
+#include <SDL3/SDL_error.h>
+#include <SDL3/SDL_log.h>
+
 #include <CLI/CLI.hpp>
+#include <exception>
 #include <string>
 
-#include "App/App.hpp"
+#include "Zero/App.hpp"
 
 int main(int argc, char** argv) {
   CLI::App app{"Zero Engine"};
-  App game;
 
   std::string scene = "";
   std::string windowTitle = "Zero Engine";
-  int windowHeight = 600;
-  int windowWidth = 800;
+  unsigned int windowHeight = 600;
+  unsigned int windowWidth = 800;
 
   app.add_option("-t,--title", windowTitle, "Window title");
   app.add_option("-q,--height", windowHeight, "Window height");
@@ -25,14 +28,24 @@ int main(int argc, char** argv) {
 
   CLI11_PARSE(app, argc, argv);
 
-  game.Init({
-      .appTitle = windowTitle,
-      .windowHeight = windowHeight,
-      .windowWidth = windowWidth,
-  });
+  try {
+    App game;
 
-  game.Run();
-  game.Quit();
+    game.Init({
+        .appTitle = windowTitle,
+        .windowHeight = windowHeight,
+        .windowWidth = windowWidth,
+    });
 
-  return 0;
+    game.Run();
+    game.Quit();
+
+    return 0;
+  } catch (const std::exception& e) {
+    SDL_LogError(0, "%s", e.what());
+    return 1;
+  } catch (...) {
+    SDL_LogCritical(0, "Unknown exception occured! %s", SDL_GetError());
+    return 2;
+  }
 }

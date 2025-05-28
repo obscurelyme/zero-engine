@@ -7,26 +7,27 @@
 #include <spdlog/logger.h>
 #include <spdlog/spdlog.h>
 
-#include <string>
+#include <memory>
 
-struct AppParams {
-    std::string appTitle;
-    int windowHeight;
-    int windowWidth;
-};
+#include "zero/app-params.hpp"
+#include "zero/renderer.hpp"
+#include "zero/window.hpp"
 
 class App {
   public:
     App();
+    App(const App&) = delete;
+    App& operator=(const App&) = delete;
+    ~App();
     int Init(const AppParams&);
     void Run();
     void Quit();
     static void Log(void* userdata, int category, SDL_LogPriority priority, const char* message);
 
   private:
-    SDL_Window* window = nullptr;
-    SDL_Renderer* renderer = nullptr;
-    SDL_GLContext glContext = nullptr;
+    std::shared_ptr<Window> window = nullptr;
+    std::shared_ptr<Renderer> renderer = nullptr;
+    AppParams appParams;
 
     static std::shared_ptr<spdlog::logger> logger;
 };

@@ -10,13 +10,16 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(C_STANDARD 20)
 set(CMAKE_CXX_STANDARD 20)
 
+find_package(fmt CONFIG REQUIRED)
 find_package(CLI11 CONFIG REQUIRED)
 find_package(SDL3 CONFIG REQUIRED)
 find_package(spdlog CONFIG REQUIRED)
 
 set(SOURCES
   src/main.cpp
-  src/App/App.cpp
+  src/engine/app.cpp
+  src/engine/window.cpp
+  src/engine/renderer.cpp
 )
 
 # Add sources to executable
@@ -34,6 +37,7 @@ target_include_directories(ZeroEngine PRIVATE include)
 
 # Link libraries
 target_link_libraries(ZeroEngine PRIVATE 
+  fmt::fmt-header-only
   spdlog::spdlog_header_only 
   CLI11::CLI11 
   SDL3::SDL3 
