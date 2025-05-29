@@ -11,6 +11,14 @@ namespace GL {
   PFNGLSHADERSOURCEPROC glShaderSource = nullptr;
   PFNGLGETSHADERIVPROC glGetShaderiv = nullptr;
   PFNGLGETSHADERINFOLOGPROC glGetShaderInfoLog = nullptr;
+  PFNGLCREATEPROGRAMPROC glCreateProgram = nullptr;
+  PFNGLGETPROGRAMIVPROC glGetProgramiv = nullptr;
+  PFNGLGETPROGRAMINFOLOGPROC glGetProgramInfoLog = nullptr;
+  PFNGLLINKPROGRAMPROC glLinkProgram = nullptr;
+  PFNGLATTACHSHADERPROC glAttachShader = nullptr;
+  PFNGLDETACHSHADERPROC glDetachShader = nullptr;
+  PFNGLUSEPROGRAMPROC glUseProgram = nullptr;
+  PFNGLDELETESHADERPROC glDeleteShader = nullptr;
 
   void LoadGLFunctions() {
     glGenBuffers = reinterpret_cast<PFNGLGENBUFFERSPROC>(SDL_GL_GetProcAddress("glGenBuffers"));
@@ -21,6 +29,14 @@ namespace GL {
     glShaderSource = reinterpret_cast<PFNGLSHADERSOURCEPROC>(SDL_GL_GetProcAddress("glShaderSource"));
     glGetShaderiv = reinterpret_cast<PFNGLGETSHADERIVPROC>(SDL_GL_GetProcAddress("glGetShaderiv"));
     glGetShaderInfoLog = reinterpret_cast<PFNGLGETSHADERINFOLOGPROC>(SDL_GL_GetProcAddress("glGetShaderInfoLog"));
+    glCreateProgram = reinterpret_cast<PFNGLCREATEPROGRAMPROC>(SDL_GL_GetProcAddress("glCreateProgram"));
+    glGetProgramiv = reinterpret_cast<PFNGLGETPROGRAMIVPROC>(SDL_GL_GetProcAddress("glGetProgramiv"));
+    glGetProgramInfoLog = reinterpret_cast<PFNGLGETPROGRAMINFOLOGPROC>(SDL_GL_GetProcAddress("glGetProgramInfoLog"));
+    glLinkProgram = reinterpret_cast<PFNGLLINKPROGRAMPROC>(SDL_GL_GetProcAddress("glLinkProgram"));
+    glAttachShader = reinterpret_cast<PFNGLATTACHSHADERPROC>(SDL_GL_GetProcAddress("glAttachShader"));
+    glDetachShader = reinterpret_cast<PFNGLDETACHSHADERPROC>(SDL_GL_GetProcAddress("glDetachShader"));
+    glUseProgram = reinterpret_cast<PFNGLUSEPROGRAMPROC>(SDL_GL_GetProcAddress("glUseProgram"));
+    glDeleteShader = reinterpret_cast<PFNGLDELETESHADERPROC>(SDL_GL_GetProcAddress("glDeleteShader"));
   }
 
   void UnloadGLFunctions() {
@@ -32,6 +48,14 @@ namespace GL {
     glShaderSource = nullptr;
     glGetShaderiv = nullptr;
     glGetShaderInfoLog = nullptr;
+    glCreateProgram = nullptr;
+    glGetProgramiv = nullptr;
+    glGetProgramInfoLog = nullptr;
+    glLinkProgram = nullptr;
+    glAttachShader = nullptr;
+    glDetachShader = nullptr;
+    glUseProgram = nullptr;
+    glDeleteShader = nullptr;
   }
 
 }  // namespace GL

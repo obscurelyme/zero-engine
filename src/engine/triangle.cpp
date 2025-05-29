@@ -10,15 +10,19 @@
 
 Triangle::Triangle() {
   verticies = {-0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f, 0.0f, 0.5f, 0.0f};
-  vertexShaderFile = FS::ReadFile("shaders/triangle.vert.glsl");
 
-  shader = std::make_shared<Shader>(GL_VERTEX_SHADER, vertexShaderFile);
+  vertexShaderFile = FS::ReadFile("shaders/triangle.vert.glsl");
+  fragmentShaderFile = FS::ReadFile("shaders/triangle.frag.glsl");
+
+  vertexShader = std::make_shared<Shader>(GL_VERTEX_SHADER, vertexShaderFile);
+  fragmentShader = std::make_shared<Shader>(GL_FRAGMENT_SHADER, fragmentShaderFile);
 }
 
 Triangle::Triangle(const Triangle& triangle) {
   verticies = triangle.verticies;
   vertexShaderFile = triangle.vertexShaderFile;
-  shader = triangle.shader;
+  vertexShader = triangle.vertexShader;
+  fragmentShader = triangle.fragmentShader;
 }
 
 Triangle& Triangle::operator=(const Triangle& triangle) {
@@ -28,7 +32,8 @@ Triangle& Triangle::operator=(const Triangle& triangle) {
 
   verticies = triangle.verticies;
   vertexShaderFile = triangle.vertexShaderFile;
-  shader = triangle.shader;
+  vertexShader = triangle.vertexShader;
+  fragmentShader = triangle.fragmentShader;
 
   return *this;
 }

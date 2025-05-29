@@ -21,8 +21,9 @@ class Triangle {
   private:
     void genBufferInfo();
     std::string vertexShaderFile = "";
-    unsigned int vertextShader = 0;
-    std::shared_ptr<Shader> shader = nullptr;
+    std::string fragmentShaderFile = "";
+    std::shared_ptr<Shader> vertexShader = nullptr;
+    std::shared_ptr<Shader> fragmentShader = nullptr;
 };
 
 #endif

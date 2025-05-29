@@ -10,7 +10,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(C_STANDARD 20)
 set(CMAKE_CXX_STANDARD 20)
 
-# find_package(GLEW REQUIRED)
+find_package(OpenGL REQUIRED)
 find_package(fmt CONFIG REQUIRED)
 find_package(CLI11 CONFIG REQUIRED)
 find_package(SDL3 CONFIG REQUIRED)
@@ -24,6 +24,7 @@ set(SOURCES
   src/engine/fs.cpp
   src/engine/triangle.cpp
   src/engine/shader.cpp
+  src/engine/shader-program.cpp
   src/engine/gl.cpp
 )
 
@@ -46,7 +47,7 @@ target_link_libraries(ZeroEngine PRIVATE
   spdlog::spdlog_header_only 
   CLI11::CLI11 
   SDL3::SDL3 
-  OpenGL32
+  OpenGL::GL
 )
 
 # Enable ALL compiler warnings
