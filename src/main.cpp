@@ -6,7 +6,6 @@
 #include <string>
 
 #include "zero/app.hpp"
-#include "zero/fs.hpp"
 
 int main(int argc, char** argv) {
   CLI::App app{"Zero Engine"};

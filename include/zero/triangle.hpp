@@ -2,17 +2,27 @@
 #define ZERO_ENGINE_SHAPE_TRIANGLE_
 
 #include <array>
+#include <memory>
+#include <string>
+
+#include "zero/shader.hpp"
 
 class Triangle {
   public:
     Triangle();
     Triangle(const Triangle&);
     Triangle& operator=(const Triangle&);
+    ~Triangle() = default;
     std::array<float, 9> verticies;
-    unsigned int vbo;
+    unsigned int vbo = 0;
+
+    void Render();
 
   private:
     void genBufferInfo();
+    std::string vertexShaderFile = "";
+    unsigned int vertextShader = 0;
+    std::shared_ptr<Shader> shader = nullptr;
 };
 
 #endif

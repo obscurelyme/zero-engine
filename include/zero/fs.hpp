@@ -7,7 +7,15 @@
 
 #include <string>
 
+/**
+ * @namespace FS
+ * @brief Utility functions for file system operations.
+ */
 namespace FS {
+  /**
+   * Read a file into a string.
+   * The file should exist within the `/assets` directory.
+   */
   std::string ReadFile(const std::string& filePath);
 }  // namespace FS
 

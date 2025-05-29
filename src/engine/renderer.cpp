@@ -8,6 +8,8 @@
 
 #include <stdexcept>
 
+#include "zero/gl.hpp"
+
 Renderer::Renderer(SDL_Window* window, unsigned int width, unsigned int height) {
   if (window == nullptr) {
     throw std::runtime_error("Unable to create renderer from a null window.");
@@ -27,6 +29,9 @@ Renderer::Renderer(SDL_Window* window, unsigned int width, unsigned int height) 
     throw std::runtime_error(message);
   }
 
+  // NOTE: load dynamic functions
+  GL::LoadGLFunctions();
+
   glViewport(0, 0, width, height);
 
   if (!SDL_GL_SetSwapInterval(1)) {
@@ -42,6 +47,7 @@ Renderer::Renderer(SDL_Window* window, unsigned int width, unsigned int height) 
 Renderer::~Renderer() {
   if (this->glContext != nullptr) {
     SDL_GL_DestroyContext(this->glContext);
+    GL::UnloadGLFunctions();
   }
 }
 

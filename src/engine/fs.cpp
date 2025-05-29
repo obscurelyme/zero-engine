@@ -5,12 +5,12 @@
 
 std::string FS::ReadFile(const std::string &filePath) {
   std::filesystem::path dir = SDL_GetBasePath();
-  std::filesystem::path fullFilePath = dir / filePath;
+  std::filesystem::path fullFilePath = dir / "assets" / filePath;
 
   auto stream = SDL_IOFromFile(fullFilePath.string().c_str(), "r");
   auto fileSize = SDL_GetIOSize(stream);
 
-  std::vector<char> buffer(fileSize + 1);  // NOTE: add room for Jesus...I mean null terminating char.
+  std::vector<char> buffer(fileSize + 1);  // NOTE: leave room for Jesus...I mean null terminating char.
 
   SDL_ReadIO(stream, buffer.data(), fileSize);
   SDL_CloseIO(stream);

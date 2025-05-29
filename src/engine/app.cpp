@@ -10,6 +10,7 @@
 #include <memory>
 
 #include "zero/renderer.hpp"
+#include "zero/triangle.hpp"
 #include "zero/window.hpp"
 
 std::shared_ptr<spdlog::logger> App::logger = nullptr;
@@ -43,6 +44,8 @@ int App::Init(const AppParams &appParams) {
 void App::Run() {
   SDL_Event event;
   bool running = true;
+
+  Triangle firstTriangle;
 
   while (running) {
     while (SDL_PollEvent(&event)) {
