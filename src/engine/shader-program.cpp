@@ -2,11 +2,23 @@
 
 #include <SDL3/SDL_opengl.h>
 
+#include <memory>
 #include <stdexcept>
 
 #include "zero/gl.hpp"
+#include "zero/shader.hpp"
 
 ShaderProgram::ShaderProgram() : infoLog(512) { program = GL::glCreateProgram(); }
+
+ShaderProgram::~ShaderProgram() {
+  if (program != 0) {
+    GL::glDeleteProgram(program);
+  }
+}
+
+void ShaderProgram::Use() { GL::glUseProgram(program); }
+
+void ShaderProgram::AttachShader(std::shared_ptr<Shader> shader) { shaders.push_back(shader); }
 
 void ShaderProgram::LinkProgram() {
   for (const auto& shader : shaders) {

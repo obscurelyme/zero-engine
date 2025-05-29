@@ -9,6 +9,9 @@
 class ShaderProgram {
   public:
     ShaderProgram();
+    ~ShaderProgram();
+    void Use();
+    void AttachShader(std::shared_ptr<Shader> shader);
     void LinkProgram();
     std::vector<std::shared_ptr<Shader>> shaders{};
     unsigned int program;

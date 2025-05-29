@@ -18,7 +18,7 @@ class Shader {
   private:
     GLenum shaderType;
     std::string sourceCode;
-    unsigned int shaderAddr;
+    unsigned int shaderAddr = 0;
     std::vector<char> infoLog;
 };
 

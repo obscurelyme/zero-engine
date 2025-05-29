@@ -64,6 +64,9 @@ void App::Run() {
 
     renderer->ClearScreen();
 
+    firstTriangle.Render();
+
+    renderer->ClearUsedShaderProgram();
     renderer->SwapBuffers();
   }
 }

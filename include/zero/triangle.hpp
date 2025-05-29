@@ -5,6 +5,7 @@
 #include <memory>
 #include <string>
 
+#include "shader-program.hpp"
 #include "zero/shader.hpp"
 
 class Triangle {
@@ -15,6 +16,7 @@ class Triangle {
     ~Triangle() = default;
     std::array<float, 9> verticies;
     unsigned int vbo = 0;
+    unsigned int vao = 0;
 
     void Render();
 
@@ -24,6 +26,7 @@ class Triangle {
     std::string fragmentShaderFile = "";
     std::shared_ptr<Shader> vertexShader = nullptr;
     std::shared_ptr<Shader> fragmentShader = nullptr;
+    ShaderProgram shaderProgram;
 };
 
 #endif

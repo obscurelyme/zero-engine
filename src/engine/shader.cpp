@@ -22,7 +22,9 @@ Shader::Shader(GLenum shaderType, const std::string& sourceCode) : infoLog(512) 
 }
 
 Shader::~Shader() {
-  // TODO: free resources
+  if (shaderAddr != 0) {
+    GL::glDeleteShader(shaderAddr);
+  }
 }
 
 unsigned int Shader::Get() const { return this->shaderAddr; }

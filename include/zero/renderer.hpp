@@ -13,6 +13,10 @@ class Renderer {
 
     void ClearScreen() const;
     void SwapBuffers() const;
+    /**
+     * Called at the end of the frame or whenever you need to unset the used shader program.
+     */
+    void ClearUsedShaderProgram() const;
 
   private:
     SDL_Window* window = nullptr;
