@@ -9,6 +9,21 @@ namespace GL {
   void LoadGLFunctions();
 
   /**
+   * Register a callback function that will be called whenever a debug message is generated. This is useful for
+   * debugging and getting detailed information about OpenGL operations.
+   * ---
+   * @param GLenum source,
+   * @param GLenum type,
+   * @param unsigned int id,
+   * @param GLenum severity,
+   * @param GLsizei length,
+   * @param const char *message,
+   * @param const void *userParam
+   */
+  extern PFNGLDEBUGMESSAGECALLBACKPROC glDebugMessageCallback;
+  extern PFNGLDEBUGMESSAGECONTROLPROC glDebugMessageControl;
+
+  /**
    * Generate buffer object names
    * @returns void
    */
@@ -49,7 +64,6 @@ namespace GL {
   extern PFNGLENABLEVERTEXATTRIBARRAYPROC glEnableVertexAttribArray;
   extern PFNGLGENVERTEXARRAYSPROC glGenVertexArrays;
   extern PFNGLBINDVERTEXARRAYPROC glBindVertexArray;
-  extern PFNGLDRAWARRAYSEXTPROC glDrawArraysEXT;
 }  // namespace GL
 
 #endif

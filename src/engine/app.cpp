@@ -23,7 +23,7 @@ int App::Init(const AppParams &appParams) {
   this->appParams = appParams;
 
   if (logger == nullptr) {
-    logger = spdlog::stdout_color_mt("console");
+    logger = spdlog::stdout_color_mt("app");
   }
 
   SDL_SetLogOutputFunction(App::Log, nullptr);

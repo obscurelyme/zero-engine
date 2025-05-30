@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.20)
 
 project(ZeroEngine)
 
@@ -60,3 +60,10 @@ add_custom_target(Resources ALL
   ${CMAKE_CURRENT_BINARY_DIR}/assets/shaders
   COMMENT "Copying shaders to build directory"
 )
+
+# Defines
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+  target_compile_definitions(ZeroEngine PRIVATE DEBUG_BUILD=1)
+else()
+  target_compile_definitions(ZeroEngine PRIVATE RELEASE_BUILD=1)
+endif()

@@ -5,12 +5,21 @@
 #include <SDL3/SDL_opengl.h>
 #include <SDL3/SDL_video.h>
 #include <fmt/format.h>
+#include <spdlog/common.h>
+#include <spdlog/sinks/stdout_color_sinks.h>
 
 #include <stdexcept>
 
 #include "zero/gl.hpp"
 
-Renderer::Renderer(SDL_Window* window, unsigned int width, unsigned int height) {
+std::shared_ptr<spdlog::logger> Renderer::logger = nullptr;
+
+Renderer::Renderer(SDL_Window *window, unsigned int width, unsigned int height) {
+  if (logger == nullptr) {
+    logger = spdlog::stdout_color_mt("renderer");
+    logger->set_level(spdlog::level::debug);
+  }
+
   if (window == nullptr) {
     throw std::runtime_error("Unable to create renderer from a null window.");
   }
@@ -39,6 +48,13 @@ Renderer::Renderer(SDL_Window* window, unsigned int width, unsigned int height) 
     throw std::runtime_error(message);
   };
 
+#ifdef DEBUG_BUILD
+  glEnable(GL_DEBUG_OUTPUT);
+  glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+  GL::glDebugMessageCallback(Renderer::Log, nullptr);
+  GL::glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
+#endif
+
   glVendor = glGetString(GL_VENDOR);
   glVersion = glGetString(GL_VERSION);
   glslVersion = glGetString(GL_SHADING_LANGUAGE_VERSION);
@@ -59,3 +75,80 @@ void Renderer::ClearScreen() const {
 void Renderer::SwapBuffers() const { SDL_GL_SwapWindow(window); }
 
 void Renderer::ClearUsedShaderProgram() const { GL::glUseProgram(0); }
+
+void Renderer::Log(GLenum source, GLenum type, unsigned int id, GLenum severity, GLsizei, const char *message,
+                   const void *) {
+  std::string sourcefmt;
+  std::string typefmt;
+  std::string logMessage = fmt::format("{}|{}", id, message);
+
+  switch (source) {
+    case GL_DEBUG_SOURCE_API:
+      sourcefmt = "Source: API";
+      break;
+    case GL_DEBUG_SOURCE_WINDOW_SYSTEM:
+      sourcefmt = "Source: Window System";
+      break;
+    case GL_DEBUG_SOURCE_SHADER_COMPILER:
+      sourcefmt = "Source: Shader Compiler";
+      break;
+    case GL_DEBUG_SOURCE_THIRD_PARTY:
+      sourcefmt = "Source: Third Party";
+      break;
+    case GL_DEBUG_SOURCE_APPLICATION:
+      sourcefmt = "Source: Application";
+      break;
+    case GL_DEBUG_SOURCE_OTHER:
+      sourcefmt = "Source: Other";
+      break;
+  }
+
+  switch (type) {
+    case GL_DEBUG_TYPE_ERROR:
+      typefmt = "Type: Error";
+      break;
+    case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR:
+      typefmt = "Type: Deprecated Behaviour";
+      break;
+    case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:
+      typefmt = "Type: Undefined Behaviour";
+      break;
+    case GL_DEBUG_TYPE_PORTABILITY:
+      typefmt = "Type: Portability";
+      break;
+    case GL_DEBUG_TYPE_PERFORMANCE:
+      typefmt = "Type: Performance";
+      break;
+    case GL_DEBUG_TYPE_MARKER:
+      typefmt = "Type: Marker";
+      break;
+    case GL_DEBUG_TYPE_PUSH_GROUP:
+      typefmt = "Type: Push Group";
+      break;
+    case GL_DEBUG_TYPE_POP_GROUP:
+      typefmt = "Type: Pop Group";
+      break;
+    case GL_DEBUG_TYPE_OTHER:
+      typefmt = "Type: Other";
+      break;
+  }
+
+  switch (severity) {
+    case GL_DEBUG_SEVERITY_HIGH: {
+      logger->debug("[high] {}|{}|{}", logMessage, sourcefmt, typefmt);
+      break;
+    }
+    case GL_DEBUG_SEVERITY_MEDIUM: {
+      logger->debug("[medium] {}|{}|{}", logMessage, sourcefmt, typefmt);
+      break;
+    }
+    case GL_DEBUG_SEVERITY_LOW: {
+      logger->debug("[low] {}|{}|{}", logMessage, sourcefmt, typefmt);
+      break;
+    }
+    case GL_DEBUG_SEVERITY_NOTIFICATION: {
+      logger->debug("[notification] {}|{}|{}", logMessage, sourcefmt, typefmt);
+      break;
+    }
+  }
+}

@@ -3,6 +3,8 @@
 #include <SDL3/sdl_video.h>
 
 namespace GL {
+  PFNGLDEBUGMESSAGECALLBACKPROC glDebugMessageCallback = nullptr;
+  PFNGLDEBUGMESSAGECONTROLPROC glDebugMessageControl = nullptr;
   PFNGLGENBUFFERSPROC glGenBuffers = nullptr;
   PFNGLBINDBUFFERPROC glBindBuffer = nullptr;
   PFNGLBUFFERDATAPROC glBufferData = nullptr;
@@ -26,6 +28,11 @@ namespace GL {
   PFNGLBINDVERTEXARRAYPROC glBindVertexArray = nullptr;
 
   void LoadGLFunctions() {
+    glDebugMessageCallback =
+        reinterpret_cast<PFNGLDEBUGMESSAGECALLBACKPROC>(SDL_GL_GetProcAddress("glDebugMessageCallback"));
+    glDebugMessageControl =
+        reinterpret_cast<PFNGLDEBUGMESSAGECONTROLPROC>(SDL_GL_GetProcAddress("glDebugMessageControl"));
+
     glGenBuffers = reinterpret_cast<PFNGLGENBUFFERSPROC>(SDL_GL_GetProcAddress("glGenBuffers"));
     glBindBuffer = reinterpret_cast<PFNGLBINDBUFFERPROC>(SDL_GL_GetProcAddress("glBindBuffer"));
     glBufferData = reinterpret_cast<PFNGLBUFFERDATAPROC>(SDL_GL_GetProcAddress("glBufferData"));
@@ -55,6 +62,8 @@ namespace GL {
   }
 
   void UnloadGLFunctions() {
+    glDebugMessageCallback = nullptr;
+    glDebugMessageControl = nullptr;
     glGenBuffers = nullptr;
     glBindBuffer = nullptr;
     glBufferData = nullptr;
