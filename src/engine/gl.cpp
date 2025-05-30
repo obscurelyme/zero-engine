@@ -2,6 +2,8 @@
 
 #include <SDL3/sdl_video.h>
 
+#define LOAD_GL_FUNC(name) name = reinterpret_cast<decltype(name)>(SDL_GL_GetProcAddress(#name))
+
 namespace GL {
   PFNGLDEBUGMESSAGECALLBACKPROC glDebugMessageCallback = nullptr;
   PFNGLDEBUGMESSAGECONTROLPROC glDebugMessageControl = nullptr;
@@ -26,39 +28,75 @@ namespace GL {
   PFNGLENABLEVERTEXATTRIBARRAYPROC glEnableVertexAttribArray = nullptr;
   PFNGLGENVERTEXARRAYSPROC glGenVertexArrays = nullptr;
   PFNGLBINDVERTEXARRAYPROC glBindVertexArray = nullptr;
+  PFNGLGETUNIFORMLOCATIONPROC glGetUniformLocation = nullptr;
+
+  PFNGLUNIFORM1FPROC glUniform1f = nullptr;
+  PFNGLUNIFORM2FPROC glUniform2f = nullptr;
+  PFNGLUNIFORM3FPROC glUniform3f = nullptr;
+  PFNGLUNIFORM4FPROC glUniform4f = nullptr;
+
+  PFNGLUNIFORM1IPROC glUniform1i = nullptr;
+  PFNGLUNIFORM2IPROC glUniform2i = nullptr;
+  PFNGLUNIFORM3IPROC glUniform3i = nullptr;
+  PFNGLUNIFORM4IPROC glUniform4i = nullptr;
+
+  PFNGLUNIFORM1DPROC glUniform1d = nullptr;
+  PFNGLUNIFORM2DPROC glUniform2d = nullptr;
+  PFNGLUNIFORM3DPROC glUniform3d = nullptr;
+  PFNGLUNIFORM4DPROC glUniform4d = nullptr;
+
+  PFNGLUNIFORM1UIPROC glUniform1ui = nullptr;
+  PFNGLUNIFORM2UIPROC glUniform2ui = nullptr;
+  PFNGLUNIFORM3UIPROC glUniform3ui = nullptr;
+  PFNGLUNIFORM4UIPROC glUniform4ui = nullptr;
 
   void LoadGLFunctions() {
-    glDebugMessageCallback =
-        reinterpret_cast<PFNGLDEBUGMESSAGECALLBACKPROC>(SDL_GL_GetProcAddress("glDebugMessageCallback"));
-    glDebugMessageControl =
-        reinterpret_cast<PFNGLDEBUGMESSAGECONTROLPROC>(SDL_GL_GetProcAddress("glDebugMessageControl"));
+    LOAD_GL_FUNC(glDebugMessageCallback);
+    LOAD_GL_FUNC(glDebugMessageControl);
 
-    glGenBuffers = reinterpret_cast<PFNGLGENBUFFERSPROC>(SDL_GL_GetProcAddress("glGenBuffers"));
-    glBindBuffer = reinterpret_cast<PFNGLBINDBUFFERPROC>(SDL_GL_GetProcAddress("glBindBuffer"));
-    glBufferData = reinterpret_cast<PFNGLBUFFERDATAPROC>(SDL_GL_GetProcAddress("glBufferData"));
+    LOAD_GL_FUNC(glGenBuffers);
+    LOAD_GL_FUNC(glBindBuffer);
+    LOAD_GL_FUNC(glBufferData);
 
-    glCreateShader = reinterpret_cast<PFNGLCREATESHADERPROC>(SDL_GL_GetProcAddress("glCreateShader"));
-    glDeleteShader = reinterpret_cast<PFNGLDELETESHADERPROC>(SDL_GL_GetProcAddress("glDeleteShader"));
-    glCompileShader = reinterpret_cast<PFNGLCOMPILESHADERPROC>(SDL_GL_GetProcAddress("glCompileShader"));
-    glShaderSource = reinterpret_cast<PFNGLSHADERSOURCEPROC>(SDL_GL_GetProcAddress("glShaderSource"));
-    glGetShaderiv = reinterpret_cast<PFNGLGETSHADERIVPROC>(SDL_GL_GetProcAddress("glGetShaderiv"));
-    glGetShaderInfoLog = reinterpret_cast<PFNGLGETSHADERINFOLOGPROC>(SDL_GL_GetProcAddress("glGetShaderInfoLog"));
+    LOAD_GL_FUNC(glCreateShader);
+    LOAD_GL_FUNC(glDeleteShader);
+    LOAD_GL_FUNC(glCompileShader);
+    LOAD_GL_FUNC(glShaderSource);
+    LOAD_GL_FUNC(glGetShaderiv);
+    LOAD_GL_FUNC(glGetShaderInfoLog);
 
-    glDeleteProgram = reinterpret_cast<PFNGLDELETEPROGRAMPROC>(SDL_GL_GetProcAddress("glDeleteProgram"));
-    glCreateProgram = reinterpret_cast<PFNGLCREATEPROGRAMPROC>(SDL_GL_GetProcAddress("glCreateProgram"));
-    glGetProgramiv = reinterpret_cast<PFNGLGETPROGRAMIVPROC>(SDL_GL_GetProcAddress("glGetProgramiv"));
-    glGetProgramInfoLog = reinterpret_cast<PFNGLGETPROGRAMINFOLOGPROC>(SDL_GL_GetProcAddress("glGetProgramInfoLog"));
-    glLinkProgram = reinterpret_cast<PFNGLLINKPROGRAMPROC>(SDL_GL_GetProcAddress("glLinkProgram"));
-    glAttachShader = reinterpret_cast<PFNGLATTACHSHADERPROC>(SDL_GL_GetProcAddress("glAttachShader"));
-    glDetachShader = reinterpret_cast<PFNGLDETACHSHADERPROC>(SDL_GL_GetProcAddress("glDetachShader"));
-    glUseProgram = reinterpret_cast<PFNGLUSEPROGRAMPROC>(SDL_GL_GetProcAddress("glUseProgram"));
+    LOAD_GL_FUNC(glDeleteProgram);
+    LOAD_GL_FUNC(glCreateProgram);
+    LOAD_GL_FUNC(glGetProgramiv);
+    LOAD_GL_FUNC(glGetProgramInfoLog);
+    LOAD_GL_FUNC(glLinkProgram);
+    LOAD_GL_FUNC(glAttachShader);
+    LOAD_GL_FUNC(glDetachShader);
+    LOAD_GL_FUNC(glUseProgram);
 
-    glVertexAttribPointer =
-        reinterpret_cast<PFNGLVERTEXATTRIBPOINTERPROC>(SDL_GL_GetProcAddress("glVertexAttribPointer"));
-    glEnableVertexAttribArray =
-        reinterpret_cast<PFNGLENABLEVERTEXATTRIBARRAYPROC>(SDL_GL_GetProcAddress("glEnableVertexAttribArray"));
-    glGenVertexArrays = reinterpret_cast<PFNGLGENVERTEXARRAYSPROC>(SDL_GL_GetProcAddress("glGenVertexArrays"));
-    glBindVertexArray = reinterpret_cast<PFNGLBINDVERTEXARRAYPROC>(SDL_GL_GetProcAddress("glBindVertexArray"));
+    LOAD_GL_FUNC(glVertexAttribPointer);
+    LOAD_GL_FUNC(glEnableVertexAttribArray);
+    LOAD_GL_FUNC(glGenVertexArrays);
+    LOAD_GL_FUNC(glBindVertexArray);
+
+    LOAD_GL_FUNC(glGetUniformLocation);
+
+    LOAD_GL_FUNC(glUniform1i);
+    LOAD_GL_FUNC(glUniform2f);
+    LOAD_GL_FUNC(glUniform3f);
+    LOAD_GL_FUNC(glUniform4f);
+    LOAD_GL_FUNC(glUniform1i);
+    LOAD_GL_FUNC(glUniform2i);
+    LOAD_GL_FUNC(glUniform3i);
+    LOAD_GL_FUNC(glUniform4i);
+    LOAD_GL_FUNC(glUniform1d);
+    LOAD_GL_FUNC(glUniform2d);
+    LOAD_GL_FUNC(glUniform3d);
+    LOAD_GL_FUNC(glUniform4d);
+    LOAD_GL_FUNC(glUniform1ui);
+    LOAD_GL_FUNC(glUniform2ui);
+    LOAD_GL_FUNC(glUniform3ui);
+    LOAD_GL_FUNC(glUniform4ui);
   }
 
   void UnloadGLFunctions() {
@@ -85,6 +123,23 @@ namespace GL {
     glEnableVertexAttribArray = nullptr;
     glGenVertexArrays = nullptr;
     glBindVertexArray = nullptr;
+    glGetUniformLocation = nullptr;
+    glUniform1f = nullptr;
+    glUniform2f = nullptr;
+    glUniform3f = nullptr;
+    glUniform4f = nullptr;
+    glUniform1i = nullptr;
+    glUniform2i = nullptr;
+    glUniform3i = nullptr;
+    glUniform4i = nullptr;
+    glUniform1d = nullptr;
+    glUniform2d = nullptr;
+    glUniform3d = nullptr;
+    glUniform4d = nullptr;
+    glUniform1ui = nullptr;
+    glUniform2ui = nullptr;
+    glUniform3ui = nullptr;
+    glUniform4ui = nullptr;
   }
 
 }  // namespace GL

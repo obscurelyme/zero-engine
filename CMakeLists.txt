@@ -10,6 +10,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(C_STANDARD 20)
 set(CMAKE_CXX_STANDARD 20)
 
+find_package(Stb REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(fmt CONFIG REQUIRED)
 find_package(CLI11 CONFIG REQUIRED)
@@ -39,7 +40,7 @@ endif()
 
 
 # Include directories
-target_include_directories(ZeroEngine PRIVATE include)
+target_include_directories(ZeroEngine PRIVATE include ${Stb_INCLUDE_DIR})
 
 # Link libraries
 target_link_libraries(ZeroEngine PRIVATE 

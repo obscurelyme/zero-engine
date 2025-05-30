@@ -64,6 +64,32 @@ namespace GL {
   extern PFNGLENABLEVERTEXATTRIBARRAYPROC glEnableVertexAttribArray;
   extern PFNGLGENVERTEXARRAYSPROC glGenVertexArrays;
   extern PFNGLBINDVERTEXARRAYPROC glBindVertexArray;
+
+  extern PFNGLGETUNIFORMLOCATIONPROC glGetUniformLocation;
+
+  extern PFNGLUNIFORM1FPROC glUniform1f;
+  extern PFNGLUNIFORM2FPROC glUniform2f;
+  extern PFNGLUNIFORM3FPROC glUniform3f;
+  extern PFNGLUNIFORM4FPROC glUniform4f;
+
+  extern PFNGLUNIFORM1IPROC glUniform1i;
+  extern PFNGLUNIFORM2IPROC glUniform2i;
+  extern PFNGLUNIFORM3IPROC glUniform3i;
+  extern PFNGLUNIFORM4IPROC glUniform4i;
+
+  extern PFNGLUNIFORM1DPROC glUniform1d;
+  extern PFNGLUNIFORM2DPROC glUniform2d;
+  extern PFNGLUNIFORM3DPROC glUniform3d;
+  extern PFNGLUNIFORM4DPROC glUniform4d;
+
+  extern PFNGLUNIFORM1UIPROC glUniform1ui;
+  extern PFNGLUNIFORM2UIPROC glUniform2ui;
+  extern PFNGLUNIFORM3UIPROC glUniform3ui;
+  extern PFNGLUNIFORM4UIPROC glUniform4ui;
+
+  extern PFNGLUNIFORMMATRIX2FVPROC glUniformMatrix2fv;
+  extern PFNGLUNIFORMMATRIX3FVPROC glUniformMatrix3fv;
+  extern PFNGLUNIFORMMATRIX4FVPROC glUniformMatrix4fv;
 }  // namespace GL
 
 #endif

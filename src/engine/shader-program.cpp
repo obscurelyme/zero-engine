@@ -8,29 +8,87 @@
 #include "zero/gl.hpp"
 #include "zero/shader.hpp"
 
-ShaderProgram::ShaderProgram() : infoLog(512) { program = GL::glCreateProgram(); }
+ShaderProgram::ShaderProgram() : infoLog(512) { id = GL::glCreateProgram(); }
 
 ShaderProgram::~ShaderProgram() {
-  if (program != 0) {
-    GL::glDeleteProgram(program);
+  if (id != 0) {
+    GL::glDeleteProgram(id);
   }
 }
 
-void ShaderProgram::Use() { GL::glUseProgram(program); }
+void ShaderProgram::Use() { GL::glUseProgram(id); }
 
 void ShaderProgram::AttachShader(std::shared_ptr<Shader> shader) { shaders.push_back(shader); }
 
 void ShaderProgram::LinkProgram() {
   for (const auto& shader : shaders) {
-    GL::glAttachShader(program, shader->Get());
+    GL::glAttachShader(id, shader->Get());
   }
-  GL::glLinkProgram(program);
+  GL::glLinkProgram(id);
 
   int success;
-  GL::glGetProgramiv(program, GL_LINK_STATUS, &success);
+  GL::glGetProgramiv(id, GL_LINK_STATUS, &success);
 
   if (!success) {
-    GL::glGetProgramInfoLog(program, GL_LINK_STATUS, nullptr, infoLog.data());
+    GL::glGetProgramInfoLog(id, GL_LINK_STATUS, nullptr, infoLog.data());
     throw std::runtime_error(std::string(infoLog.data()));
   }
 }
+
+void ShaderProgram::SetBool(const std::string& uniformName, bool value) {
+  GL::glUniform1i(GL::glGetUniformLocation(id, uniformName.c_str()), (GLint)value);
+}
+
+void ShaderProgram::SetInt(const std::string& uniformName, GLint value) {
+  GL::glUniform1i(GL::glGetUniformLocation(id, uniformName.c_str()), value);
+}
+
+void ShaderProgram::SetUInt(const std::string& uniformName, GLuint value) {
+  GL::glUniform1ui(GL::glGetUniformLocation(id, uniformName.c_str()), value);
+}
+
+void ShaderProgram::SetFloat(const std::string& uniformName, GLfloat value) {
+  GL::glUniform1f(GL::glGetUniformLocation(id, uniformName.c_str()), value);
+}
+
+void ShaderProgram::SetVec2f(const std::string& uniformName, GLfloat x, GLfloat y) {
+  GL::glUniform2f(GL::glGetUniformLocation(id, uniformName.c_str()), x, y);
+}
+
+void ShaderProgram::SetVec3f(const std::string& uniformName, GLfloat x, GLfloat y, GLfloat z) {
+  GL::glUniform3f(GL::glGetUniformLocation(id, uniformName.c_str()), x, y, z);
+}
+
+void ShaderProgram::SetVec4f(const std::string& uniformName, GLfloat x, GLfloat y, GLfloat z, GLfloat w) {
+  GL::glUniform4f(GL::glGetUniformLocation(id, uniformName.c_str()), x, y, z, w);
+}
+
+void ShaderProgram::SetVec2i(const std::string& uniformName, GLint x, GLint y) {
+  GL::glUniform2i(GL::glGetUniformLocation(id, uniformName.c_str()), x, y);
+}
+
+void ShaderProgram::SetVec3i(const std::string& uniformName, GLint x, GLint y, GLint z) {
+  GL::glUniform3i(GL::glGetUniformLocation(id, uniformName.c_str()), x, y, z);
+}
+
+void ShaderProgram::SetVec4i(const std::string& uniformName, GLint x, GLint y, GLint z, GLint w) {
+  GL::glUniform4i(GL::glGetUniformLocation(id, uniformName.c_str()), x, y, z, w);
+}
+
+void ShaderProgram::SetVec2ui(const std::string& uniformName, GLuint x, GLuint y) {
+  GL::glUniform2ui(GL::glGetUniformLocation(id, uniformName.c_str()), x, y);
+}
+
+void ShaderProgram::SetVec3ui(const std::string& uniformName, GLuint x, GLuint y, GLuint z) {
+  GL::glUniform3ui(GL::glGetUniformLocation(id, uniformName.c_str()), x, y, z);
+}
+
+void ShaderProgram::SetVec4ui(const std::string& uniformName, GLuint x, GLuint y, GLuint z, GLuint w) {
+  GL::glUniform4ui(GL::glGetUniformLocation(id, uniformName.c_str()), x, y, z, w);
+}
+
+// void ShaderProgram::SetMatrix2f(const std::string& uniformName, GLfloat x, GLfloat y) {}
+
+// void ShaderProgram::SetMatrix3f(const std::string& uniformName, GLfloat x, GLfloat y, GLfloat z) {}
+
+// void ShaderProgram::SetMatrix4f(const std::string& uniformName, GLfloat x, GLfloat y, GLfloat z, GLfloat w) {}
