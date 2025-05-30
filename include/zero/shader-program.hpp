@@ -8,12 +8,32 @@
 
 #include "zero/shader.hpp"
 
+class ShaderProgram;
+
+/**
+ * Builder class that accepts a number of shader source files. When build is invokes, this builder
+ * will read in the files and create a new ShaderProgram with the compiled shaders.
+ */
+class ShaderProgramBuilder {
+  public:
+    ShaderProgramBuilder() = default;
+    ~ShaderProgramBuilder() = default;
+
+    ShaderProgramBuilder AddShaderFile(const std::string& shaderFile);
+
+    ShaderProgram Build();
+
+  private:
+    std::vector<std::string> shaderFiles;
+};
+
 class ShaderProgram {
   public:
     ShaderProgram();
     ~ShaderProgram();
 
     void Use();
+    void AddShader();
     void AttachShader(std::shared_ptr<Shader> shader);
     void LinkProgram();
 
