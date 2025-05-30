@@ -81,7 +81,7 @@ namespace GL {
 
     LOAD_GL_FUNC(glGetUniformLocation);
 
-    LOAD_GL_FUNC(glUniform1i);
+    LOAD_GL_FUNC(glUniform1f);
     LOAD_GL_FUNC(glUniform2f);
     LOAD_GL_FUNC(glUniform3f);
     LOAD_GL_FUNC(glUniform4f);

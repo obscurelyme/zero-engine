@@ -5,8 +5,28 @@
 #include <memory>
 #include <stdexcept>
 
+#include "zero/fs.hpp"
 #include "zero/gl.hpp"
 #include "zero/shader.hpp"
+
+ShaderProgramBuilder ShaderProgramBuilder::AddShader(const ShaderProps& props) {
+  shaderProps.push_back(props);
+  return *this;
+}
+
+std::shared_ptr<ShaderProgram> ShaderProgramBuilder::Build() {
+  std::shared_ptr<ShaderProgram> program = std::make_shared<ShaderProgram>();
+
+  for (const auto& shaderProp : shaderProps) {
+    std::string shaderSource = FS::ReadFile(shaderProp.shaderFile);
+    std::shared_ptr<Shader> shader = std::make_shared<Shader>(shaderProp.shaderType, shaderSource);
+    program->AttachShader(shader);
+  }
+
+  program->LinkProgram();
+
+  return program;
+}
 
 ShaderProgram::ShaderProgram() : infoLog(512) { id = GL::glCreateProgram(); }
 
@@ -16,7 +36,9 @@ ShaderProgram::~ShaderProgram() {
   }
 }
 
-void ShaderProgram::Use() { GL::glUseProgram(id); }
+unsigned int ShaderProgram::Get() const { return id; }
+
+void ShaderProgram::Use() const { GL::glUseProgram(id); }
 
 void ShaderProgram::AttachShader(std::shared_ptr<Shader> shader) { shaders.push_back(shader); }
 
@@ -33,6 +55,8 @@ void ShaderProgram::LinkProgram() {
     GL::glGetProgramInfoLog(id, GL_LINK_STATUS, nullptr, infoLog.data());
     throw std::runtime_error(std::string(infoLog.data()));
   }
+
+  shaders.clear();
 }
 
 void ShaderProgram::SetBool(const std::string& uniformName, bool value) {

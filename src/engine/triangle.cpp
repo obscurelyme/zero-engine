@@ -1,34 +1,27 @@
 #include "zero/triangle.hpp"
 
 #include <SDL3/SDL_opengl.h>
+#include <SDL3/SDL_timer.h>
 #include <SDL3/sdl_video.h>
 
-#include <memory>
-
-#include "zero/fs.hpp"
 #include "zero/gl.hpp"
+#include "zero/shader-program.hpp"
 
 Triangle::Triangle() {
   verticies = {-0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f, 0.0f, 0.5f, 0.0f};
 
-  vertexShaderFile = FS::ReadFile("shaders/triangle.vert.glsl");
-  fragmentShaderFile = FS::ReadFile("shaders/triangle.frag.glsl");
+  ShaderProgramBuilder builder;
 
-  vertexShader = std::make_shared<Shader>(GL_VERTEX_SHADER, vertexShaderFile);
-  fragmentShader = std::make_shared<Shader>(GL_FRAGMENT_SHADER, fragmentShaderFile);
-
-  shaderProgram.AttachShader(vertexShader);
-  shaderProgram.AttachShader(fragmentShader);
-  shaderProgram.LinkProgram();
+  shaderProgram = builder.AddShader({.shaderType = GL_VERTEX_SHADER, .shaderFile = "shaders/triangle.vert.glsl"})
+                      .AddShader({.shaderType = GL_FRAGMENT_SHADER, .shaderFile = "shaders/triangle.frag.glsl"})
+                      .Build();
 
   this->genBufferInfo();
 }
 
 Triangle::Triangle(const Triangle& triangle) {
   verticies = triangle.verticies;
-  vertexShaderFile = triangle.vertexShaderFile;
-  vertexShader = triangle.vertexShader;
-  fragmentShader = triangle.fragmentShader;
+  shaderProgram = triangle.shaderProgram;
 }
 
 Triangle& Triangle::operator=(const Triangle& triangle) {
@@ -37,15 +30,13 @@ Triangle& Triangle::operator=(const Triangle& triangle) {
   }
 
   verticies = triangle.verticies;
-  vertexShaderFile = triangle.vertexShaderFile;
-  vertexShader = triangle.vertexShader;
-  fragmentShader = triangle.fragmentShader;
+  shaderProgram = triangle.shaderProgram;
 
   return *this;
 }
 
 void Triangle::Render() {
-  this->shaderProgram.Use();
+  shaderProgram->Use();
   GL::glBindVertexArray(vao);
   glDrawArrays(GL_TRIANGLES, 0, 3);
 }

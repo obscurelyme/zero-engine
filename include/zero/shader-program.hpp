@@ -10,6 +10,11 @@
 
 class ShaderProgram;
 
+struct ShaderProps {
+    GLenum shaderType;
+    std::string shaderFile;
+};
+
 /**
  * Builder class that accepts a number of shader source files. When build is invokes, this builder
  * will read in the files and create a new ShaderProgram with the compiled shaders.
@@ -19,12 +24,12 @@ class ShaderProgramBuilder {
     ShaderProgramBuilder() = default;
     ~ShaderProgramBuilder() = default;
 
-    ShaderProgramBuilder AddShaderFile(const std::string& shaderFile);
+    ShaderProgramBuilder AddShader(const ShaderProps& shaderFile);
 
-    ShaderProgram Build();
+    std::shared_ptr<ShaderProgram> Build();
 
   private:
-    std::vector<std::string> shaderFiles;
+    std::vector<ShaderProps> shaderProps;
 };
 
 class ShaderProgram {
@@ -32,8 +37,8 @@ class ShaderProgram {
     ShaderProgram();
     ~ShaderProgram();
 
-    void Use();
-    void AddShader();
+    unsigned int Get() const;
+    void Use() const;
     void AttachShader(std::shared_ptr<Shader> shader);
     void LinkProgram();
 
@@ -58,6 +63,7 @@ class ShaderProgram {
     // void SetMatrix3f(const std::string& uniformName, GLfloat x, GLfloat y, GLfloat z);
     // void SetMatrix4f(const std::string& uniformName, GLfloat x, GLfloat y, GLfloat z, GLfloat w);
 
+  private:
     std::vector<std::shared_ptr<Shader>> shaders{};
     unsigned int id;
     std::vector<char> infoLog;

@@ -2,11 +2,8 @@
 #define ZERO_ENGINE_SHAPE_TRIANGLE_
 
 #include <array>
-#include <memory>
-#include <string>
 
 #include "shader-program.hpp"
-#include "zero/shader.hpp"
 
 class Triangle {
   public:
@@ -22,11 +19,7 @@ class Triangle {
 
   private:
     void genBufferInfo();
-    std::string vertexShaderFile = "";
-    std::string fragmentShaderFile = "";
-    std::shared_ptr<Shader> vertexShader = nullptr;
-    std::shared_ptr<Shader> fragmentShader = nullptr;
-    ShaderProgram shaderProgram;
+    std::shared_ptr<ShaderProgram> shaderProgram = nullptr;
 };
 
 #endif
