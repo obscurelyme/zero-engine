@@ -45,10 +45,16 @@ void Triangle::Process(float delta) {
 
   if (input != nullptr) {
     if (input->key == SDLK_W) {
-      yPos += 1.0 * delta;
+      yPos += 5.0 * delta;
     }
     if (input->key == SDLK_S) {
-      yPos -= 1.0 * delta;
+      yPos -= 5.0 * delta;
+    }
+    if (input->key == SDLK_A) {
+      xPos -= 5.0 * delta;
+    }
+    if (input->key == SDLK_D) {
+      xPos += 5.0 * delta;
     }
   }
 }
@@ -59,7 +65,7 @@ void Triangle::SubmitRender(Renderer& renderer) const {
   float redValue = sin(SDL_GetTicks() / 1000.0f) / 2.0f + 0.5f;
 
   shaderProgram->SetVec4f("ourColor", redValue, 0.0f, 0.0f, 1.0f);
-  shaderProgram->SetVec2f("bPos", 0.0f, yPos);
+  shaderProgram->SetVec2f("bPos", xPos, yPos);
 
   GL::glBindVertexArray(vao);
   glDrawArrays(GL_TRIANGLES, 0, 3);
