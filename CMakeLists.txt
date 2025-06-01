@@ -27,6 +27,9 @@ set(SOURCES
   src/engine/shader.cpp
   src/engine/shader-program.cpp
   src/engine/gl.cpp
+  src/engine/renderable-manager.cpp
+  src/engine/input-manager.cpp
+  src/engine/processable-manager.cpp
 )
 
 # Add sources to executable

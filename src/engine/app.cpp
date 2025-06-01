@@ -4,11 +4,17 @@
 #include <SDL3/SDL_events.h>
 #include <SDL3/SDL_init.h>
 #include <SDL3/SDL_log.h>
+#include <SDL3/SDL_stdinc.h>
+#include <SDL3/SDL_timer.h>
 #include <SDL3/SDL_video.h>
+#include <spdlog/common.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 
 #include <memory>
 
+#include "zero/game-object.hpp"
+#include "zero/input-manager.hpp"
+#include "zero/processable-manager.hpp"
 #include "zero/renderer.hpp"
 #include "zero/triangle.hpp"
 #include "zero/window.hpp"
@@ -45,9 +51,17 @@ void App::Run() {
   SDL_Event event;
   bool running = true;
 
-  Triangle firstTriangle;
+  std::shared_ptr<Triangle> triangle = CreateGameObject<Triangle>();
 
+  Uint64 last = SDL_GetTicks();
+  Uint64 now;
   while (running) {
+    now = SDL_GetTicks();
+    float delta = (now - last) / 1000.0f;
+    last = now;
+
+    InputManager::SetInput({});
+
     while (SDL_PollEvent(&event)) {
       switch (event.type) {
         case SDL_EVENT_QUIT: {
@@ -59,12 +73,18 @@ void App::Run() {
           glViewport(0, 0, event.window.data1, event.window.data2);
           break;
         }
+        case SDL_EVENT_KEY_DOWN:
+        case SDL_EVENT_KEY_UP: {
+          InputManager::SetInput(event.key);
+        }
       }
     }
 
+    ProcessableManager::Process(delta);
+
     renderer->ClearScreen();
 
-    firstTriangle.Render();
+    renderer->RenderScene();
 
     renderer->ClearUsedShaderProgram();
     renderer->SwapBuffers();
@@ -72,6 +92,7 @@ void App::Run() {
 }
 
 void App::Quit() {
+  SDL_LogInfo(0, "Quitting application...");
   renderer = nullptr;
   window = nullptr;
   SDL_Quit();

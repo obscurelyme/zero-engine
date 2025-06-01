@@ -11,10 +11,12 @@
 #include <stdexcept>
 
 #include "zero/gl.hpp"
+#include "zero/renderable-manager.hpp"
+#include "zero/shader-program.hpp"
 
 std::shared_ptr<spdlog::logger> Renderer::logger = nullptr;
 
-Renderer::Renderer(SDL_Window *window, unsigned int width, unsigned int height) {
+Renderer::Renderer(SDL_Window *window, unsigned int width, unsigned int height) : boundShaderProgram(0) {
   if (logger == nullptr) {
     logger = spdlog::stdout_color_mt("renderer");
     logger->set_level(spdlog::level::debug);
@@ -74,7 +76,29 @@ void Renderer::ClearScreen() const {
 
 void Renderer::SwapBuffers() const { SDL_GL_SwapWindow(window); }
 
-void Renderer::ClearUsedShaderProgram() const { GL::glUseProgram(0); }
+void Renderer::ClearUsedShaderProgram() {
+  GL::glUseProgram(0);
+  boundShaderProgram = 0;
+}
+
+void Renderer::BindShader(const std::shared_ptr<ShaderProgram> &shader) {
+  unsigned int shaderId = shader->Get();
+  if (boundShaderProgram == shaderId) {
+    return;
+  }
+  boundShaderProgram = shaderId;
+  GL::glUseProgram(shaderId);
+}
+
+void Renderer::RenderScene() {
+  RenderableManager::CleanRenderables();
+
+  for (const auto &objectPointer : RenderableManager::GetRenderables()) {
+    if (const auto &renderable = objectPointer.lock()) {
+      renderable->SubmitRender(*this);
+    }
+  }
+}
 
 void Renderer::Log(GLenum source, GLenum type, unsigned int id, GLenum severity, GLsizei, const char *message,
                    const void *) {

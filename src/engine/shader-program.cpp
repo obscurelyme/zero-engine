@@ -28,7 +28,7 @@ std::shared_ptr<ShaderProgram> ShaderProgramBuilder::Build() {
   return program;
 }
 
-ShaderProgram::ShaderProgram() : infoLog(512) { id = GL::glCreateProgram(); }
+ShaderProgram::ShaderProgram() : isBound(false), infoLog(512) { id = GL::glCreateProgram(); }
 
 ShaderProgram::~ShaderProgram() {
   if (id != 0) {
@@ -37,8 +37,6 @@ ShaderProgram::~ShaderProgram() {
 }
 
 unsigned int ShaderProgram::Get() const { return id; }
-
-void ShaderProgram::Use() const { GL::glUseProgram(id); }
 
 void ShaderProgram::AttachShader(std::shared_ptr<Shader> shader) { shaders.push_back(shader); }
 

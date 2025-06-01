@@ -1,10 +1,15 @@
 #include "zero/triangle.hpp"
 
+#include <SDL3/SDL_keycode.h>
+#include <SDL3/SDL_oldnames.h>
 #include <SDL3/SDL_opengl.h>
 #include <SDL3/SDL_timer.h>
 #include <SDL3/sdl_video.h>
 
+#include <cmath>
+
 #include "zero/gl.hpp"
+#include "zero/input-manager.hpp"
 #include "zero/shader-program.hpp"
 
 Triangle::Triangle() {
@@ -35,8 +40,27 @@ Triangle& Triangle::operator=(const Triangle& triangle) {
   return *this;
 }
 
-void Triangle::Render() {
-  shaderProgram->Use();
+void Triangle::Process(float delta) {
+  auto input = InputManager::GetInput();
+
+  if (input != nullptr) {
+    if (input->key == SDLK_W) {
+      yPos += 1.0 * delta;
+    }
+    if (input->key == SDLK_S) {
+      yPos -= 1.0 * delta;
+    }
+  }
+}
+
+void Triangle::SubmitRender(Renderer& renderer) const {
+  renderer.BindShader(shaderProgram);
+
+  float redValue = sin(SDL_GetTicks() / 1000.0f) / 2.0f + 0.5f;
+
+  shaderProgram->SetVec4f("ourColor", redValue, 0.0f, 0.0f, 1.0f);
+  shaderProgram->SetVec2f("bPos", 0.0f, yPos);
+
   GL::glBindVertexArray(vao);
   glDrawArrays(GL_TRIANGLES, 0, 3);
 }

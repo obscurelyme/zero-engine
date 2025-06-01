@@ -3,9 +3,12 @@
 
 #include <array>
 
-#include "shader-program.hpp"
+#include "zero/iprocessable.hpp"
+#include "zero/irenderable.hpp"
+#include "zero/renderer.hpp"
+#include "zero/shader-program.hpp"
 
-class Triangle {
+class Triangle : public IRenderable, public IProcessable {
   public:
     Triangle();
     Triangle(const Triangle&);
@@ -15,9 +18,13 @@ class Triangle {
     unsigned int vbo = 0;
     unsigned int vao = 0;
 
+    void Process(float delta) override;
     void Render();
+    void SubmitRender(Renderer& renderer) const override;
 
   private:
+    float xPos = 0;
+    float yPos = 0;
     void genBufferInfo();
     std::shared_ptr<ShaderProgram> shaderProgram = nullptr;
 };

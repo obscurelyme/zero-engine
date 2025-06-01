@@ -4,6 +4,7 @@
 #include <SDL3/SDL_opengl.h>
 
 #include <memory>
+#include <unordered_map>
 #include <vector>
 
 #include "zero/shader.hpp"
@@ -38,7 +39,6 @@ class ShaderProgram {
     ~ShaderProgram();
 
     unsigned int Get() const;
-    void Use() const;
     void AttachShader(std::shared_ptr<Shader> shader);
     void LinkProgram();
 
@@ -64,6 +64,8 @@ class ShaderProgram {
     // void SetMatrix4f(const std::string& uniformName, GLfloat x, GLfloat y, GLfloat z, GLfloat w);
 
   private:
+    bool isBound;
+    std::unordered_map<std::string, bool> uniforms;
     std::vector<std::shared_ptr<Shader>> shaders{};
     unsigned int id;
     std::vector<char> infoLog;
