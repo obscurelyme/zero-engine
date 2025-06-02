@@ -30,6 +30,7 @@ set(SOURCES
   src/engine/renderable-manager.cpp
   src/engine/input-manager.cpp
   src/engine/processable-manager.cpp
+  src/engine/crash-handler.cpp
 )
 
 # Add sources to executable

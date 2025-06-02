@@ -6,8 +6,11 @@
 #include <string>
 
 #include "zero/app.hpp"
+#include "zero/crash-handler.hpp"
 
 int main(int argc, char** argv) {
+  Zero::HandleSignals();
+
   CLI::App app{"Zero Engine"};
 
   std::string scene = "";
