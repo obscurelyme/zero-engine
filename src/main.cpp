@@ -7,6 +7,7 @@
 
 #include "zero/app.hpp"
 #include "zero/crash-handler.hpp"
+#include "zero/font-manager.hpp"
 
 int main(int argc, char** argv) {
   Zero::HandleSignals();
@@ -33,6 +34,8 @@ int main(int argc, char** argv) {
         .windowHeight = windowHeight,
         .windowWidth = windowWidth,
     });
+    FontManager::Init();
+    FontManager::LoadFont("fonts/Silkscreen-Regular.ttf");
 
     game.Run();
     game.Quit();

@@ -2,6 +2,8 @@
 
 #include <SDL3/SDL_opengl.h>
 
+#include <glm/ext/matrix_float2x2.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include <memory>
 #include <stdexcept>
 
@@ -109,8 +111,14 @@ void ShaderProgram::SetVec4ui(const std::string& uniformName, GLuint x, GLuint y
   GL::glUniform4ui(GL::glGetUniformLocation(id, uniformName.c_str()), x, y, z, w);
 }
 
-// void ShaderProgram::SetMatrix2f(const std::string& uniformName, GLfloat x, GLfloat y) {}
+void ShaderProgram::SetMat2f(const std::string& uniformName, const glm::mat2& value) {
+  GL::glUniformMatrix2fv(GL::glGetUniformLocation(id, uniformName.c_str()), 1, GL_FALSE, glm::value_ptr(value));
+}
 
-// void ShaderProgram::SetMatrix3f(const std::string& uniformName, GLfloat x, GLfloat y, GLfloat z) {}
+void ShaderProgram::SetMat3f(const std::string& uniformName, const glm::mat3& value) {
+  GL::glUniformMatrix3fv(GL::glGetUniformLocation(id, uniformName.c_str()), 1, GL_FALSE, glm::value_ptr(value));
+}
 
-// void ShaderProgram::SetMatrix4f(const std::string& uniformName, GLfloat x, GLfloat y, GLfloat z, GLfloat w) {}
+void ShaderProgram::SetMat4f(const std::string& uniformName, const glm::mat4& value) {
+  GL::glUniformMatrix4fv(GL::glGetUniformLocation(id, uniformName.c_str()), 1, GL_FALSE, glm::value_ptr(value));
+}

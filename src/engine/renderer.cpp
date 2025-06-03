@@ -50,6 +50,9 @@ Renderer::Renderer(SDL_Window *window, unsigned int width, unsigned int height) 
     throw std::runtime_error(message);
   };
 
+  glEnable(GL_CULL_FACE);
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 #ifdef DEBUG_BUILD
   glEnable(GL_DEBUG_OUTPUT);
   glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);

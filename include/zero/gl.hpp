@@ -90,6 +90,10 @@ namespace GL {
   extern PFNGLUNIFORMMATRIX2FVPROC glUniformMatrix2fv;
   extern PFNGLUNIFORMMATRIX3FVPROC glUniformMatrix3fv;
   extern PFNGLUNIFORMMATRIX4FVPROC glUniformMatrix4fv;
+
+  extern PFNGLBUFFERSUBDATAPROC glBufferSubData;
+
+  extern PFNGLACTIVETEXTUREPROC glActiveTexture;
 }  // namespace GL
 
 #endif

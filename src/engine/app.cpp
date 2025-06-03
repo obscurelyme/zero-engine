@@ -16,6 +16,7 @@
 #include "zero/input-manager.hpp"
 #include "zero/processable-manager.hpp"
 #include "zero/renderer.hpp"
+#include "zero/text.hpp"
 #include "zero/triangle.hpp"
 #include "zero/window.hpp"
 
@@ -52,6 +53,8 @@ void App::Run() {
   bool running = true;
 
   std::shared_ptr<Triangle> triangle = CreateGameObject<Triangle>();
+  std::shared_ptr<Text> myText = CreateGameObject<Text>("Hello, World!");
+  myText->SetPosition(0.0f, 0.0f);
 
   Uint64 last = SDL_GetTicks();
   Uint64 now;
@@ -92,6 +95,7 @@ void App::Run() {
 }
 
 void App::Quit() {
+  Text::ClearShader();
   SDL_LogInfo(0, "Quitting application...");
   renderer = nullptr;
   window = nullptr;

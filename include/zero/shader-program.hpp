@@ -3,11 +3,14 @@
 
 #include <SDL3/SDL_opengl.h>
 
+#include <glm/ext/matrix_float2x2.hpp>
+#include <glm/glm.hpp>
 #include <memory>
 #include <unordered_map>
 #include <vector>
 
 #include "zero/shader.hpp"
+
 
 class ShaderProgram;
 
@@ -59,9 +62,9 @@ class ShaderProgram {
     void SetVec3f(const std::string& uniformName, GLfloat x, GLfloat y, GLfloat z);
     void SetVec4f(const std::string& uniformName, GLfloat x, GLfloat y, GLfloat z, GLfloat w);
 
-    // void SetMatrix2f(const std::string& uniformName, GLfloat x, GLfloat y);
-    // void SetMatrix3f(const std::string& uniformName, GLfloat x, GLfloat y, GLfloat z);
-    // void SetMatrix4f(const std::string& uniformName, GLfloat x, GLfloat y, GLfloat z, GLfloat w);
+    void SetMat2f(const std::string& uniformName, const glm::mat2&);
+    void SetMat3f(const std::string& uniformName, const glm::mat3&);
+    void SetMat4f(const std::string& uniformName, const glm::mat4&);
 
   private:
     bool isBound;

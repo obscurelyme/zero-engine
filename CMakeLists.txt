@@ -10,6 +10,8 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(C_STANDARD 20)
 set(CMAKE_CXX_STANDARD 20)
 
+find_package(glm CONFIG REQUIRED)
+find_package(Freetype REQUIRED)
 find_package(Stb REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(fmt CONFIG REQUIRED)
@@ -31,6 +33,9 @@ set(SOURCES
   src/engine/input-manager.cpp
   src/engine/processable-manager.cpp
   src/engine/crash-handler.cpp
+  src/engine/font-manager.cpp
+  src/engine/character.cpp
+  src/engine/text.cpp
 )
 
 # Add sources to executable
@@ -53,17 +58,27 @@ target_link_libraries(ZeroEngine PRIVATE
   CLI11::CLI11 
   SDL3::SDL3 
   OpenGL::GL
+  Freetype::Freetype
+  glm::glm-header-only
 )
 
 # Enable ALL compiler warnings
 target_compile_options(ZeroEngine PRIVATE -Wall -Wextra -Wpedantic -Werror)
 
 # Copy shaders into build dir
-add_custom_target(Resources ALL
+add_custom_target(Shaders ALL
   COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different 
   ${CMAKE_CURRENT_SOURCE_DIR}/src/shaders
   ${CMAKE_CURRENT_BINARY_DIR}/assets/shaders
   COMMENT "Copying shaders to build directory"
+)
+
+# Copy assets into build dir
+add_custom_target(Fonts ALL
+  COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different 
+  ${CMAKE_CURRENT_SOURCE_DIR}/assets/fonts
+  ${CMAKE_CURRENT_BINARY_DIR}/assets/fonts
+  COMMENT "Copying fonts to build directory"
 )
 
 # Defines

@@ -50,6 +50,13 @@ namespace GL {
   PFNGLUNIFORM3UIPROC glUniform3ui = nullptr;
   PFNGLUNIFORM4UIPROC glUniform4ui = nullptr;
 
+  PFNGLUNIFORMMATRIX2FVPROC glUniformMatrix2fv = nullptr;
+  PFNGLUNIFORMMATRIX3FVPROC glUniformMatrix3fv = nullptr;
+  PFNGLUNIFORMMATRIX4FVPROC glUniformMatrix4fv = nullptr;
+
+  PFNGLBUFFERSUBDATAPROC glBufferSubData = nullptr;
+  PFNGLACTIVETEXTUREPROC glActiveTexture = nullptr;
+
   void LoadGLFunctions() {
     LOAD_GL_FUNC(glDebugMessageCallback);
     LOAD_GL_FUNC(glDebugMessageControl);
@@ -97,6 +104,12 @@ namespace GL {
     LOAD_GL_FUNC(glUniform2ui);
     LOAD_GL_FUNC(glUniform3ui);
     LOAD_GL_FUNC(glUniform4ui);
+    LOAD_GL_FUNC(glUniformMatrix2fv);
+    LOAD_GL_FUNC(glUniformMatrix3fv);
+    LOAD_GL_FUNC(glUniformMatrix4fv);
+
+    LOAD_GL_FUNC(glBufferSubData);
+    LOAD_GL_FUNC(glActiveTexture);
   }
 
   void UnloadGLFunctions() {
@@ -140,6 +153,11 @@ namespace GL {
     glUniform2ui = nullptr;
     glUniform3ui = nullptr;
     glUniform4ui = nullptr;
+    glUniformMatrix2fv = nullptr;
+    glUniformMatrix3fv = nullptr;
+    glUniformMatrix4fv = nullptr;
+    glBufferSubData = nullptr;
+    glActiveTexture = nullptr;
   }
 
 }  // namespace GL
