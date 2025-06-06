@@ -5,8 +5,9 @@
 
 #include <string>
 
+#include "fs.hpp"
 
-enum TextureWrapping {
+enum class TextureWrapping : unsigned int {
   Repeat = GL_REPEAT,
   MirroredRepeat = GL_MIRRORED_REPEAT,
   ClampToEdge = GL_CLAMP_TO_EDGE,
@@ -15,13 +16,17 @@ enum TextureWrapping {
 
 class Texture {
   public:
-    explicit Texture(const std::string& fileName);
-    Texture(const Texture&);
-    Texture& operator=(const Texture&);
+    Texture() = delete;
+    Texture(const std::string& fileName, const TextureWrapping& wrapping);
+    Texture(const Texture&) = default;
+    Texture& operator=(const Texture&) = default;
 
-    TextureWrapping Wrapping;
+    [[nodiscard]] GLenum Get() const;
 
   private:
+    TextureWrapping wrapping;
+    FS::ImageProps properties;
+    GLenum textureId;
 };
 
 #endif

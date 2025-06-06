@@ -15,6 +15,7 @@ Checks: >
   -cppcoreguidelines-pro-type-const-cast,
   -cppcoreguidelines-pro-type-reinterpret-cast,
   -cppcoreguidelines-pro-type-static-cast-downcast,
+  -cppcoreguidelines-init-variables,
   -modernize-use-trailing-return-type
 WarningsAsErrors: >
   *,

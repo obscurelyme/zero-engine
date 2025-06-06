@@ -54,6 +54,7 @@ namespace GL {
 
   PFNGLBUFFERSUBDATAPROC glBufferSubData = nullptr;
   PFNGLACTIVETEXTUREPROC glActiveTexture = nullptr;
+  PFNGLGENERATEMIPMAPPROC glGenerateMipmap = nullptr;
 
   void LoadGLFunctions() {
     LOAD_GL_FUNC(glDebugMessageCallback);
@@ -108,6 +109,7 @@ namespace GL {
 
     LOAD_GL_FUNC(glBufferSubData);
     LOAD_GL_FUNC(glActiveTexture);
+    LOAD_GL_FUNC(glGenerateMipmap);
   }
 
   void UnloadGLFunctions() {
@@ -156,6 +158,7 @@ namespace GL {
     glUniformMatrix4fv = nullptr;
     glBufferSubData = nullptr;
     glActiveTexture = nullptr;
+    glGenerateMipmap = nullptr;
   }
 
 }  // namespace GL

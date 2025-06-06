@@ -36,6 +36,7 @@ set(SOURCES
   src/engine/font-manager.cpp
   src/engine/character.cpp
   src/engine/text.cpp
+  src/engine/texture.cpp
 )
 
 # Add sources to executable
@@ -79,6 +80,14 @@ add_custom_target(Fonts ALL
   ${CMAKE_CURRENT_SOURCE_DIR}/assets/fonts
   ${CMAKE_CURRENT_BINARY_DIR}/assets/fonts
   COMMENT "Copying fonts to build directory"
+)
+
+# Copy assets into build dir
+add_custom_target(Images ALL
+  COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different 
+  ${CMAKE_CURRENT_SOURCE_DIR}/assets/images
+  ${CMAKE_CURRENT_BINARY_DIR}/assets/images
+  COMMENT "Copying images to build directory"
 )
 
 # Defines

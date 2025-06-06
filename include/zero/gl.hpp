@@ -94,6 +94,7 @@ namespace GL {
   extern PFNGLBUFFERSUBDATAPROC glBufferSubData;
 
   extern PFNGLACTIVETEXTUREPROC glActiveTexture;
+  extern PFNGLGENERATEMIPMAPPROC glGenerateMipmap;
 }  // namespace GL
 
 #endif

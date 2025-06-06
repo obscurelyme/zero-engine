@@ -17,6 +17,7 @@
 #include "zero/processable-manager.hpp"
 #include "zero/renderer.hpp"
 #include "zero/text.hpp"
+#include "zero/texture.hpp"
 #include "zero/triangle.hpp"
 #include "zero/window.hpp"
 
@@ -54,7 +55,9 @@ void App::Run() {
 
   std::shared_ptr<Triangle> triangle = CreateGameObject<Triangle>();
   std::shared_ptr<Text> myText = CreateGameObject<Text>("Hello, World!");
+  Texture myTexture{"images/wall.jpg", TextureWrapping::Repeat};
   myText->SetPosition(0.0f, 0.0f);
+  triangle->SetTexture(&myTexture);
 
   Uint64 last = SDL_GetTicks();
   Uint64 now;
