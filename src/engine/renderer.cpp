@@ -19,7 +19,7 @@ std::shared_ptr<spdlog::logger> Renderer::logger = nullptr;
 Renderer::Renderer(SDL_Window *window, unsigned int width, unsigned int height) : boundShaderProgram(0) {
   if (logger == nullptr) {
     logger = spdlog::stdout_color_mt("renderer");
-    logger->set_level(spdlog::level::debug);
+    logger->set_level(spdlog::level::trace);
   }
 
   if (window == nullptr) {
@@ -105,6 +105,9 @@ void Renderer::RenderScene() {
 
 void Renderer::Log(GLenum source, GLenum type, unsigned int id, GLenum severity, GLsizei, const char *message,
                    const void *) {
+  // NOTE: ignore non-significant error/warning codes
+  if (id == 131169 || id == 131185 || id == 131218 || id == 131204) return;
+
   std::string sourcefmt;
   std::string typefmt;
   std::string logMessage = fmt::format("{}|{}", id, message);

@@ -11,12 +11,15 @@
 
 #include "zero/shader.hpp"
 
-
 class ShaderProgram;
 
 struct ShaderProps {
     GLenum shaderType;
     std::string shaderFile;
+
+    ShaderProps(GLenum type, const std::string& file);
+    ShaderProps(const ShaderProps&);
+    ShaderProps(const ShaderProps&&) noexcept;
 };
 
 /**
@@ -25,10 +28,11 @@ struct ShaderProps {
  */
 class ShaderProgramBuilder {
   public:
-    ShaderProgramBuilder() = default;
+    ShaderProgramBuilder();
     ~ShaderProgramBuilder() = default;
 
-    ShaderProgramBuilder AddShader(const ShaderProps& shaderFile);
+    ShaderProgramBuilder* AddShader(const ShaderProps& shaderFile);
+    ShaderProgramBuilder* AddShader(GLenum shaderType, const std::string& shaderFile);
 
     std::shared_ptr<ShaderProgram> Build();
 

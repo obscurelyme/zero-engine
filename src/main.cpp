@@ -14,7 +14,7 @@ int main(int argc, char** argv) {
 
   CLI::App app{"Zero Engine"};
 
-  std::string scene = "";
+  std::string scene;
   std::string windowTitle = "Zero Engine";
   unsigned int windowHeight = 600;
   unsigned int windowWidth = 800;

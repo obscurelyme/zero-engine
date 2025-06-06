@@ -1,7 +1,5 @@
 #include "zero/gl.hpp"
 
-#include <SDL3/sdl_video.h>
-
 #define LOAD_GL_FUNC(name) name = reinterpret_cast<decltype(name)>(SDL_GL_GetProcAddress(#name))
 
 namespace GL {

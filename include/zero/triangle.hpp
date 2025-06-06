@@ -13,7 +13,7 @@ class Triangle : public IRenderable, public IProcessable {
     Triangle();
     Triangle(const Triangle&);
     Triangle& operator=(const Triangle&);
-    ~Triangle() = default;
+    ~Triangle() noexcept override = default;
     std::array<float, 9> verticies;
     unsigned int vbo = 0;
     unsigned int vao = 0;

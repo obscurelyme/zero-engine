@@ -1,5 +1,6 @@
 #include "zero/shader-program.hpp"
 
+#include <SDL3/SDL_log.h>
 #include <SDL3/SDL_opengl.h>
 
 #include <glm/ext/matrix_float2x2.hpp>
@@ -11,9 +12,33 @@
 #include "zero/gl.hpp"
 #include "zero/shader.hpp"
 
-ShaderProgramBuilder ShaderProgramBuilder::AddShader(const ShaderProps& props) {
+ShaderProps::ShaderProps(GLenum type, const std::string& file) {
+  shaderType = type;
+  shaderFile = file;
+}
+
+ShaderProps::ShaderProps(const ShaderProps& props) {
+  SDL_LogDebug(0, "ShaderProps copied!");
+  shaderType = props.shaderType;
+  shaderFile = props.shaderFile;
+}
+
+ShaderProps::ShaderProps(const ShaderProps&& props) noexcept {
+  SDL_LogDebug(0, "ShaderProps moved!");
+  shaderType = props.shaderType;
+  shaderFile = std::move(props.shaderFile);
+}
+
+ShaderProgramBuilder::ShaderProgramBuilder() { shaderProps.reserve(2); }
+
+ShaderProgramBuilder* ShaderProgramBuilder::AddShader(const ShaderProps& props) {
   shaderProps.push_back(props);
-  return *this;
+  return this;
+}
+
+ShaderProgramBuilder* ShaderProgramBuilder::AddShader(GLenum shaderType, const std::string& shaderFile) {
+  shaderProps.emplace_back(shaderType, shaderFile);
+  return this;
 }
 
 std::shared_ptr<ShaderProgram> ShaderProgramBuilder::Build() {

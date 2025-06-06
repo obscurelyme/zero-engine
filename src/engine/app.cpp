@@ -22,17 +22,17 @@
 
 std::shared_ptr<spdlog::logger> App::logger = nullptr;
 
-App::App() {}
-
-App::~App() {}
+App::App() : running(true) {}
 
 int App::Init(const AppParams &appParams) {
   this->appParams = appParams;
 
   if (logger == nullptr) {
     logger = spdlog::stdout_color_mt("app");
+    logger->set_level(spdlog::level::trace);
   }
 
+  SDL_SetLogPriority(0, SDL_LOG_PRIORITY_TRACE);
   SDL_SetLogOutputFunction(App::Log, nullptr);
 
   if (!SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK)) {

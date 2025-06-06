@@ -1,6 +1,7 @@
 #include "zero/triangle.hpp"
 
 #include <SDL3/SDL_keycode.h>
+#include <SDL3/SDL_log.h>
 #include <SDL3/SDL_oldnames.h>
 #include <SDL3/SDL_opengl.h>
 #include <SDL3/SDL_timer.h>
@@ -12,22 +13,17 @@
 #include "zero/input-manager.hpp"
 #include "zero/shader-program.hpp"
 
-Triangle::Triangle() {
-  verticies = {-0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f, 0.0f, 0.5f, 0.0f};
-
+Triangle::Triangle() : verticies({-0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f, 0.0f, 0.5f, 0.0f}) {
   ShaderProgramBuilder builder;
 
-  shaderProgram = builder.AddShader({.shaderType = GL_VERTEX_SHADER, .shaderFile = "shaders/triangle.vert.glsl"})
-                      .AddShader({.shaderType = GL_FRAGMENT_SHADER, .shaderFile = "shaders/triangle.frag.glsl"})
-                      .Build();
+  shaderProgram = builder.AddShader(GL_VERTEX_SHADER, "shaders/triangle.vert.glsl")
+                      ->AddShader(GL_FRAGMENT_SHADER, "shaders/triangle.frag.glsl")
+                      ->Build();
 
   this->genBufferInfo();
 }
 
-Triangle::Triangle(const Triangle& triangle) {
-  verticies = triangle.verticies;
-  shaderProgram = triangle.shaderProgram;
-}
+Triangle::Triangle(const Triangle& triangle) : verticies(triangle.verticies), shaderProgram(triangle.shaderProgram) {}
 
 Triangle& Triangle::operator=(const Triangle& triangle) {
   if (this == &triangle) {
@@ -41,7 +37,7 @@ Triangle& Triangle::operator=(const Triangle& triangle) {
 }
 
 void Triangle::Process(float delta) {
-  auto input = InputManager::GetInput();
+  const auto* input = InputManager::GetInput();
 
   if (input != nullptr) {
     if (input->key == SDLK_W) {
@@ -62,7 +58,7 @@ void Triangle::Process(float delta) {
 void Triangle::SubmitRender(Renderer& renderer) const {
   renderer.BindShader(shaderProgram);
 
-  float redValue = sin(SDL_GetTicks() / 1000.0f) / 2.0f + 0.5f;
+  float redValue = (sin(SDL_GetTicks() / 1000.0f) / 2.0f) + 0.5f;
 
   shaderProgram->SetVec4f("ourColor", redValue, 0.0f, 0.0f, 1.0f);
   shaderProgram->SetVec2f("bPos", xPos, yPos);

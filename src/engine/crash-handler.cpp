@@ -17,36 +17,36 @@ namespace Zero {
     switch (signal) {
       case SIGABRT: {
         // NOTE: 	Abnormal termination
-        std::cerr << "Abnormal termination" << std::endl;
+        std::cerr << "Abnormal termination\n";
         break;
       }
       case SIGFPE: {
         // NOTE: Floating-point error
-        std::cerr << "Floating-point error" << std::endl;
+        std::cerr << "Floating-point error\n";
         break;
       }
       case SIGILL: {
         // NOTE: Illegal instruction
-        std::cerr << "	Illegal instruction" << std::endl;
+        std::cerr << "	Illegal instruction\n";
         break;
       }
       case SIGINT: {
         // NOTE: CTRL+C signal
-        std::cerr << "CTRL+C signal" << std::endl;
+        std::cerr << "CTRL+C signal\n";
         break;
       }
       case SIGSEGV: {
         // NOTE: Illegal storage access
-        std::cerr << "Illegal storage access" << std::endl;
+        std::cerr << "Illegal storage access\n";
         break;
       }
       case SIGTERM: {
         // NOTE: Termination request
-        std::cerr << "	Termination request" << std::endl;
+        std::cerr << "	Termination request\n";
         break;
       }
       default:
-        std::cerr << "Unknown signal" << std::endl;
+        std::cerr << "Unknown signal\n";
         break;
     }
   }

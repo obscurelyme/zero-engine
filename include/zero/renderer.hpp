@@ -16,7 +16,7 @@ class Renderer {
   public:
     Renderer(SDL_Window* window, unsigned int width, unsigned int height);
     Renderer(const Renderer&) = delete;
-    const Renderer operator=(const Renderer&) = delete;
+    Renderer operator=(const Renderer&) = delete;
     ~Renderer();
 
     void ClearScreen() const;

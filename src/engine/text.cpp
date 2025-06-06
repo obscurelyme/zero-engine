@@ -83,9 +83,9 @@ void Text::ClearShader() { shader = nullptr; }
 
 void Text::createShader() {
   ShaderProgramBuilder builder;
-  shader = builder.AddShader({GL_VERTEX_SHADER, "shaders/font.vert.glsl"})
-               .AddShader({GL_FRAGMENT_SHADER, "shaders/font.frag.glsl"})
-               .Build();
+  shader = builder.AddShader(GL_VERTEX_SHADER, "shaders/font.vert.glsl")
+               ->AddShader(GL_FRAGMENT_SHADER, "shaders/font.frag.glsl")
+               ->Build();
 }
 
 void Text::genBufferData() {

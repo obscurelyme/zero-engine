@@ -18,7 +18,9 @@ class App {
     App();
     App(const App&) = delete;
     App& operator=(const App&) = delete;
-    ~App();
+    App& operator=(const App&&) = delete;
+    App(const App&&) = delete;
+    ~App() = default;
     int Init(const AppParams&);
     void Run();
     void Quit();

@@ -4,6 +4,7 @@
 #include <SDL3/SDL_opengl.h>
 #include <fmt/format.h>
 #include <freetype/freetype.h>
+#include <freetype/fttypes.h>
 
 #include <filesystem>
 #include <glm/vec2.hpp>

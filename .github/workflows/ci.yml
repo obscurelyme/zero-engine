@@ -1,0 +1,26 @@
+name: CI/CD
+
+on:
+  - push
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    name: Lint
+    steps:
+      - run: |
+          echo "Linting project..."
+
+  test:
+    runs-on: ubuntu-latest
+    name: Test
+    steps:
+      - run: |
+          echo "Testing project..."
+
+  build:
+    runs-on: ubuntu-latest
+    name: Build
+    steps:
+      - run: |
+          echo "Building project..."
